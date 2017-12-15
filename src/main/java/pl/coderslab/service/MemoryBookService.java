@@ -20,6 +20,10 @@ public class MemoryBookService {
 				"programming"));
 	}
 
+	public void add(Book book) {
+		list.add(book);
+	}
+
 	public List<Book> getList() {
 		return list;
 	}
