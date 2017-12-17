@@ -13,15 +13,42 @@ public class MemoryBookService {
 
 	public MemoryBookService() {
 		list = new ArrayList<>();
-		list.add(new Book(1L, "9788324631766", "Thiniking in Java", "Bruce Eckel", "Helion", "programming"));
-		list.add(
-				new Book(2L, "9788324627738", "Rusz glowa Java.", "Sierra Kathy, Bates Bert", "Helion", "programming"));
-		list.add(new Book(3L, "9780130819338", "Java 2. Podstawy", "Cay Horstmann, Gary Cornell", "Helion",
-				"programming"));
 	}
 
-	public void add(Book book) {
+	public Book add(Book book) {
+		book.setId(nextId());
 		list.add(book);
+		return book;
+	}
+
+	public Book update(Book book) {
+		Book b = getById(book.getId());
+		b.setAuthor(book.getAuthor());
+		b.setIsbn(book.getIsbn());
+		b.setPublisher(book.getPublisher());
+		b.setTitle(book.getTitle());
+		b.setType(book.getType());
+		return b;
+	}
+
+	public Book remove(Book book) {
+		list.remove(book);
+		return book;
+	}
+
+	public Book remove(long id) {
+		Book b = getById(id);
+		list.remove(b);
+		return b;
+	}
+
+	public Book getById(long id) {
+		for (Book b : list) {
+			if (b.getId() == id) {
+				return b;
+			}
+		}
+		return null;
 	}
 
 	public List<Book> getList() {
@@ -30,5 +57,9 @@ public class MemoryBookService {
 
 	public void setList(List<Book> list) {
 		this.list = list;
+	}
+
+	private long nextId() {
+		return list.size() + 1;
 	}
 }
