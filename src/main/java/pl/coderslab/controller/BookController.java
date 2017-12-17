@@ -13,42 +13,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import pl.coderslab.model.Book;
-import pl.coderslab.service.MemoryBookService;
+import pl.coderslab.service.BookService;
 
 @RestController
 @RequestMapping("/books")
 public class BookController {
-	private MemoryBookService mbs;
+	private BookService bs;
 
 	@Autowired
-	public BookController(MemoryBookService mbs) {
-		this.mbs = mbs;
+	public BookController(BookService bs) {
+		this.bs = bs;
 	}
 
 	@GetMapping("")
 	public List<Book> getBooks() {
-		return mbs.getList();
+		return bs.getBooks();
 	}
 
 	@GetMapping("/{id}")
 	public Book getBook(@PathVariable long id) {
-		return mbs.getById(id);
+		return bs.getById(id);
 	}
 
 	@PostMapping("")
 	public Book addBook(@RequestBody Book book) {
-		return mbs.add(book);
+		return bs.add(book);
 	}
 
 	@DeleteMapping("/{id}")
 	public Book removeBook(@PathVariable long id) {
-		return mbs.remove(id);
+		return bs.remove(id);
 	}
 
 	@PutMapping("/{id}")
 	public Book updateBook(@RequestBody Book book, @PathVariable long id) {
 		book.setId(id);
-		return mbs.update(book);
+		return bs.update(book);
 	}
 
 }

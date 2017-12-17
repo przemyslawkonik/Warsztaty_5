@@ -8,19 +8,21 @@ import org.springframework.stereotype.Component;
 import pl.coderslab.model.Book;
 
 @Component
-public class MemoryBookService {
-	private List<Book> list;
+public class MemoryBookService implements BookService {
+	private List<Book> books;
 
 	public MemoryBookService() {
-		list = new ArrayList<>();
+		books = new ArrayList<>();
 	}
 
+	@Override
 	public Book add(Book book) {
 		book.setId(nextId());
-		list.add(book);
+		books.add(book);
 		return book;
 	}
 
+	@Override
 	public Book update(Book book) {
 		Book b = getById(book.getId());
 		b.setAuthor(book.getAuthor());
@@ -31,19 +33,16 @@ public class MemoryBookService {
 		return b;
 	}
 
-	public Book remove(Book book) {
-		list.remove(book);
-		return book;
-	}
-
+	@Override
 	public Book remove(long id) {
 		Book b = getById(id);
-		list.remove(b);
+		books.remove(b);
 		return b;
 	}
 
+	@Override
 	public Book getById(long id) {
-		for (Book b : list) {
+		for (Book b : books) {
 			if (b.getId() == id) {
 				return b;
 			}
@@ -51,15 +50,17 @@ public class MemoryBookService {
 		return null;
 	}
 
-	public List<Book> getList() {
-		return list;
+	@Override
+	public List<Book> getBooks() {
+		return books;
 	}
 
-	public void setList(List<Book> list) {
-		this.list = list;
+	@Override
+	public void setBooks(List<Book> books) {
+		this.books = books;
 	}
 
 	private long nextId() {
-		return list.size() + 1;
+		return books.size() + 1;
 	}
 }
